@@ -154,7 +154,7 @@
         <h3 class="title is-4">Arrow of Time & Temporal Reasoning</h3>
         <div class="content has-text-justified">
           <p>
-            Our purely kinematic model (TIME), trained exclusively on 140 hours of synthetic simulations, dramatically outperforms a size-matched RGB model (VideoMAEv2) and maintains high competitiveness against V-JEPA, an architecture pre-trained on over 12,000 times the real-world pre-training data.
+            Our purely kinematic model (TIME), trained exclusively on 140 hours of synthetic simulations, outperforms a size-matched RGB model (VideoMAEv2) and maintains high competitiveness against V-JEPA, an architecture pre-trained on over 12,000 times the real-world pre-training data.
           </p>
           <div class="table-container">
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -217,51 +217,77 @@
             <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
               <thead>
                 <tr>
-                  <th>Model Strategy</th>
-                  <th>SSv2 Acc.</th>
-                  <th>&Delta; (SSv2)</th>
-                  <th>Cooking Acc.</th>
-                  <th>&Delta; (Cooking)</th>
-                  <th>Diving48 Acc.</th>
-                  <th>&Delta; (Diving48)</th>
+                  <th rowspan="2" style="vertical-align: middle;">Model Strategy</th>
+                  <th colspan="2" class="has-text-centered">SSv2</th>
+                  <th colspan="4" class="has-text-centered">Ego-Exo4D</th>
+                  <th colspan="2" class="has-text-centered">Diving48</th>
+                </tr>
+                <tr>
+                  <th>Acc.</th>
+                  <th>&Delta;</th>
+                  <th>Cooking</th>
+                  <th>&Delta;</th>
+                  <th>Bike Repair</th>
+                  <th>&Delta;</th>
+                  <th>Acc.</th>
+                  <th>&Delta;</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>TIME + CLIP</td>
                   <td>31.56</td>
-                  <td style="color: green;"><strong>+13.00</strong></td>
+                  <td><strong style="color: #2e8b57;">+13.00</strong></td>
                   <td>43.27</td>
-                  <td style="color: green;"><strong>+17.28</strong></td>
+                  <td><strong style="color: #2e8b57;">+17.28</strong></td>
+                  <td>19.31</td>
+                  <td><strong style="color: #2e8b57;">+3.46</strong></td>
                   <td>16.11</td>
-                  <td style="color: green;"><strong>+2.14</strong></td>
+                  <td><strong style="color: #2e8b57;">+2.14</strong></td>
                 </tr>
                 <tr>
                   <td>TIME + DINOv3</td>
                   <td>34.60</td>
-                  <td style="color: green;"><strong>+12.65</strong></td>
+                  <td><strong style="color: #2e8b57;">+12.65</strong></td>
                   <td>43.27</td>
-                  <td style="color: green;"><strong>+18.01</strong></td>
+                  <td><strong style="color: #2e8b57;">+18.01</strong></td>
+                  <td>20.69</td>
+                  <td><strong style="color: #2e8b57;">+5.07</strong></td>
                   <td>18.08</td>
-                  <td style="color: green;"><strong>+1.73</strong></td>
+                  <td><strong style="color: #2e8b57;">+1.73</strong></td>
                 </tr>
                 <tr>
                   <td>TIME + VideoMAEv2</td>
                   <td>38.74</td>
-                  <td style="color: green;"><strong>+5.69</strong></td>
+                  <td><strong style="color: #2e8b57;">+5.69</strong></td>
                   <td>55.74</td>
-                  <td style="color: green;"><strong>+12.78</strong></td>
+                  <td><strong style="color: #2e8b57;">+12.78</strong></td>
+                  <td>29.03</td>
+                  <td><strong style="color: #2e8b57;">+1.33</strong></td>
                   <td>24.97</td>
-                  <td style="color: green;"><strong>+0.73</strong></td>
+                  <td><strong style="color: #2e8b57;">+0.73</strong></td>
                 </tr>
                 <tr>
                   <td>TIME + RVM</td>
                   <td>41.92</td>
-                  <td style="color: green;"><strong>+1.84</strong></td>
+                  <td><strong style="color: #2e8b57;">+1.84</strong></td>
                   <td>39.66</td>
-                  <td style="color: green;"><strong>+14.56</strong></td>
+                  <td><strong style="color: #2e8b57;">+14.56</strong></td>
+                  <td>23.04</td>
+                  <td><strong style="color: #2e8b57;">+0.28</strong></td>
                   <td>11.74</td>
-                  <td style="color: green;"><strong>+2.53</strong></td>
+                  <td><strong style="color: #2e8b57;">+2.53</strong></td>
+                </tr>
+                <tr>
+                  <td>TIME + V-JEPA 2</td>
+                  <td>50.00</td>
+                  <td><strong style="color: #2e8b57;">+0.22</strong></td>
+                  <td>48.52</td>
+                  <td><strong style="color: #2e8b57;">+13.96</strong></td>
+                  <td>26.68</td>
+                  <td><strong style="color: gray;">-2.17</strong></td>
+                  <td>30.04</td>
+                  <td><strong style="color: gray;">-0.04</strong></td>
                 </tr>
               </tbody>
             </table>
