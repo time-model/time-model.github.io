@@ -141,59 +141,153 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>Video representation learning has seen tremendous progress in recent years. This has been driven by many factors, including the scale of training and the success of visual models trained contrastively with language. While these factors have pushed the boundaries of what video models can do, they also introduce their own set of limitations: first, scaling video models can reach prohibitive costs and second, learning from language restricts the range of concepts that can be learned to those in captions. As a result, video models still struggle with temporal understanding.</p><p>In this paper we propose a novel approach that uses motion as the central modality for video representation. In particular, given the motion in a video in the form of point-tracks, we use a masked-autoencoder to mask some of the tracks and train the autoencoder to reconstruct the missing tracks. This allows us to learn a representation in a self-supervised manner.</p><p>We show that using motion to represent videos actually addresses both of the core limitations of video technology. First, it allows us to massively reduce the scale of training data, as motion is inherently appearance-independent and hence needs fewer examples to generalize well. Second, motion allows us to bypass the language-dependent training paradigm, learning better fine-grained concepts. The result is an embedding that we call <b>TIME (Temporally Informed Motion Embedding)</b>, a representation trained exclusively on synthetic motion data.</p><p>We test this embedding on a wide set of tasks in a zero-shot manner. We observe that without bells and whistles, performance is on par with state-of-the-art models using up to 4 orders of magnitude less training data. This is a stepping stone towards a new paradigm of video models that are both more temporally aware as well as more scalable.</p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-    <!-- Method. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Architecture</h2>
-        <div class="content has-text-justified">
-          <p>
-            Given a set of point trajectories, the model groups them into tubelets and encodes them into trajectory tokens using a tokenizer. During training, we mask 75% of the tokens and only the visible ones are passed through the encoder. A decoder then attempts to reconstruct the masked trajectory tokens from the encoder output. The training loss is computed only on the masked trajectories.
-          </p>
-        </div>
-        <img src="./static/images/time/model_architecture.png" style="width: 100%; border-radius: 10px; margin-top: 10px;"/>
-      </div>
-    </div>
-    <!--/ Method. -->
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Results</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            We evaluate TIME on two main fronts: its ability to perform pure temporal reasoning and its complementary value when combined with state-of-the-art appearance models.
+          </p>
+        </div>
+
+        <h3 class="title is-4">Arrow of Time & Temporal Reasoning</h3>
+        <div class="content has-text-justified">
+          <p>
+            Our purely kinematic model (TIME), trained exclusively on 140 hours of synthetic simulations, dramatically outperforms a size-matched RGB model (VideoMAEv2) and maintains high competitiveness against V-JEPA, an architecture pre-trained on over 12,000 times the real-world pre-training data.
+          </p>
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>VideoMAEv2</th>
+                  <th>RVM</th>
+                  <th>V-JEPA 2</th>
+                  <th><strong>TIME (Ours)</strong></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>SSv2 (AoT)</td>
+                  <td>71.87</td>
+                  <td>81.88</td>
+                  <td><strong>89.36</strong></td>
+                  <td><u>88.53</u></td>
+                </tr>
+                <tr>
+                  <td>CLEVRER (T1)</td>
+                  <td>77.73</td>
+                  <td>86.56</td>
+                  <td>92.64</td>
+                  <td><strong>93.84</strong></td>
+                </tr>
+                <tr>
+                  <td>CLEVRER (T2)</td>
+                  <td>33.33</td>
+                  <td>58.17</td>
+                  <td>58.92</td>
+                  <td><strong>74.95</strong></td>
+                </tr>
+                <tr>
+                  <td>CLEVRER (T3)</td>
+                  <td>36.69</td>
+                  <td>59.10</td>
+                  <td><strong>77.84</strong></td>
+                  <td><u>61.35</u></td>
+                </tr>
+                <tr>
+                  <td><em>Video Hours Eq.</em></td>
+                  <td><em>~7,500 (54x)</em></td>
+                  <td><em>~0.25M (1,785x)</em></td>
+                  <td><em>~1.73M (12,357x)</em></td>
+                  <td><em><strong>140 (1x)</strong></em></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 class="title is-4" style="margin-top: 2rem;">Complementary Video Features</h3>
+        <div class="content has-text-justified">
+          <p>
+            Because TIME operates purely on motion tracks, it is highly orthogonal to appearance models. Concatenating frozen TIME features with standard video and image representations yields massive performance gains across challenging benchmarks like SSv2, Ego-Exo4D, and Diving48.
+          </p>
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Model Strategy</th>
+                  <th>SSv2 Acc.</th>
+                  <th>&Delta; (SSv2)</th>
+                  <th>Cooking Acc.</th>
+                  <th>&Delta; (Cooking)</th>
+                  <th>Diving48 Acc.</th>
+                  <th>&Delta; (Diving48)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TIME + CLIP</td>
+                  <td>31.56</td>
+                  <td style="color: green;"><strong>+13.00</strong></td>
+                  <td>43.27</td>
+                  <td style="color: green;"><strong>+17.28</strong></td>
+                  <td>16.11</td>
+                  <td style="color: green;"><strong>+2.14</strong></td>
+                </tr>
+                <tr>
+                  <td>TIME + DINOv3</td>
+                  <td>34.60</td>
+                  <td style="color: green;"><strong>+12.65</strong></td>
+                  <td>43.27</td>
+                  <td style="color: green;"><strong>+18.01</strong></td>
+                  <td>18.08</td>
+                  <td style="color: green;"><strong>+1.73</strong></td>
+                </tr>
+                <tr>
+                  <td>TIME + VideoMAEv2</td>
+                  <td>38.74</td>
+                  <td style="color: green;"><strong>+5.69</strong></td>
+                  <td>55.74</td>
+                  <td style="color: green;"><strong>+12.78</strong></td>
+                  <td>24.97</td>
+                  <td style="color: green;"><strong>+0.73</strong></td>
+                </tr>
+                <tr>
+                  <td>TIME + RVM</td>
+                  <td>41.92</td>
+                  <td style="color: green;"><strong>+1.84</strong></td>
+                  <td>39.66</td>
+                  <td style="color: green;"><strong>+14.56</strong></td>
+                  <td>11.74</td>
+                  <td style="color: green;"><strong>+2.53</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 class="title is-4" style="margin-top: 2rem;">Visualizing the Impact</h3>
         <div class="columns is-centered">
           <div class="column">
             <div class="content">
-              <h3 class="title is-4">Data Efficiency</h3>
               <p>
-                TIME achieves appearance-free action classification performance on-par with the state-of-the-art V-JEPA model despite using several magnitudes less pre-training data.
+                <strong>Data Efficiency:</strong> TIME achieves appearance-free action classification performance on-par with the state-of-the-art V-JEPA model despite using several magnitudes less pre-training data.
               </p>
-              <img src="./static/images/time/scaling_plot.png" style="width: 100%;"/>
+              <img src="./static/images/time/scaling_plot.png" style="width: 100%; border-radius: 10px;"/>
             </div>
           </div>
           <div class="column">
             <div class="content">
-              <h3 class="title is-4">Fine-Grained Temporal Features</h3>
               <p>
-                UMAP plot showing class separation for V-JEPA vs. concatenating V-JEPA and TIME, on frozen features. Using TIME greatly improves the separation of similar fine-grained actions.
+                <strong>Fine-Grained Temporal Features:</strong> UMAP plot showing class separation for V-JEPA vs. concatenating V-JEPA and TIME, on frozen features. Using TIME greatly improves the separation.
               </p>
-              <img src="./static/images/time/umap_granular_comparison.png" style="width: 100%;"/>
+              <img src="./static/images/time/umap_granular_comparison.png" style="width: 100%; border-radius: 10px;"/>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
