@@ -154,11 +154,24 @@
       </div>
     </div>
     <!--/ Abstract. -->
-</section>
-<section class="section">
+
     <!-- Method. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
+        
+      </div>
+    </div>
+    <!--/ Method. -->
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+
         <h2 class="title is-3">Architecture</h2>
         <img src="./static/images/time/model_architecture.png" style="width: 80%; border-radius: 10px; margin-top: 10px; margin-bottom: 20px"/>
         <div class="content has-text-justified">
@@ -171,15 +184,7 @@
             During training, we mask 75% of the tokens and only the visible ones are passed through the encoder. A decoder then attempts to reconstruct the masked trajectory tokens from the encoder output. The training loss is computed only on the masked trajectories.
           </p>
         </div>
-      </div>
-    </div>
-    <!--/ Method. -->
-  </div>
-</section>
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full-width">
+        
         <h2 class="title is-3">Results</h2>
 
         <div class="content has-text-justified">
