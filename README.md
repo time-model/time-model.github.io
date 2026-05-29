@@ -1,14 +1,13 @@
-# Nerfies
-
-This is the repository that contains source code for the [Nerfies website](https://nerfies.github.io).
-
-If you find Nerfies useful for your work please cite:
+# TIME
 ```
-@article{park2021nerfies
-  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
-  title     = {Nerfies: Deformable Neural Radiance Fields},
-  journal   = {ICCV},
-  year      = {2021},
+@misc{skackauskas2026timemachinepowermotion,
+      title={The TIME Machine: On The Power of Motion for Efficient Perception}, 
+      author={Mantas Skackauskas and Xinyue Hao and Laura Sevilla-Lara},
+      year={2026},
+      eprint={2605.23045},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.23045}, 
 }
 ```
 
